@@ -1,0 +1,5 @@
+bookdown::tufte_html2: 
+  output_dir: "_book"
+bookdown::word_document2: default
+bookdown::pdf_document2:
+  toc: no

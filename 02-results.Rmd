@@ -1,0 +1,118 @@
+
+# Results
+```{r setupr, include=FALSE, echo = FALSE, warning = FALSE}
+source('data_4_paper.R')
+```
+
+Experiments 1 and 2 both consisted of three equally long blocks. The frequency of pop-out target presence (or absence) was varied across blocks in Experiment 1.  In Experiment 2, a target was always present, and the frequency of the target being a color-defined or, alternatively, an orientation-defined singleton was varied across blocks. In Experiment 3, target presence and absence were kept equal frequent, as were trials with color- and orientation-defined singleton targets. 
+One implication of this design is that the high-frequency condition for one target condition (present/absent, color/orientation) was implemented in the same block as the low-frequency condition for the other target condition. So, in all figures and analyses of the effects of frequency, the high- and low-frequency conditions are based on data collected in different blocks for each target condition, while the data for the medium-frequency condition comes from the same block for each target condition. 
+
+## Error rates
+
+```{r errors, fig.cap="Error rates from Experiments 1, 2, and 3 for all combinations of target frequency. Target frequency is defined relative to the target condition, as the frequency with which that target condition occurred within a given block. Of note, this means that, for a given frequency, the data from the different target conditions do not necessarily come from the same block of the experiment. Error bars show the standard error of the mean.", message = FALSE}
+# plot error rates for all 3 exps.
+
+pd <- position_dodge(width = 0.05)
+serrors %>% ggplot(aes(x = BlkFreq, color = target, shape = target, group=target, y = merr))+ 
+      geom_errorbar( aes(ymax=merr+se_err, ymin=merr-se_err), width=0.05, position = pd)  +
+      geom_line(position = pd) + geom_point(size = 3, position = pd) +
+      ylab("error rate") +  xlab('Frequencies in Blocks') + 
+      figTheme("bottom") + scale_x_continuous(breaks = c(0.25,0.5,0.75)) +
+      facet_wrap(~ exp)
+
+```
+
+The singleton search was quite easy, with participants making few errors overall: mean error rates were 1.5%, 2.5%, and 3.3% in Experiments 1, 2, and 3 respectively (Figure \@ref(fig:errors)). 
+Despite the low average error rates, error rates differed significantly between blocks in both Experiments 1 and 2 [$F(1.34,14.78) = 11.50$,  Huynh-Feldt-corrected degrees of freedom, $p < 0.01, \eta^{2}_{p}=0.51$, and $F(2,22)=12.20,$, $p < 0.001, \eta^{2}_{p}=0.53$, respectively]: as indicated by posthoc comparisons, error rates were higher in the low-frequency blocks. In particular, in Experiment 1 (target-present vs. -absent), error rates were significantly higher in the low-frequency compared to the medium- and high-frequency blocks [$t(11)=3.67, p<0.01$, $t(11)=4.51, p<0.001$, Bonferoni-corrected p-values], with no difference between the latter  [$t(11)=0.84, p>0.9$]. 
+In Experiment 2, error rates were also significantly higher in the low-frequency compared to the medium- and high-frequency blocks [$t(11)=2.85, p<0.05$; $t(11)=4.92, p<0.001$, Bonferoni-corrected p-values], without a significant difference between the latter [$t(11)=2.07, p=0.15$]. 
+
+In addition,  in Experiment 1, error rates were overall higher for the target-present than for target-absent trials, that is, there were more misses than false alarms, $F(1,11) = 11.43, p<0.01, \eta^{2}_{p}=0.51$. In contrast, there was no difference in error rates between color and orientation targets in Experiment 2, $F(1,11)=0.70, p=0.42, BF_{10}=0.31$. 
+Interestingly, there was no interaction between target condition and frequency in either Experiment 1 or Experiment 2 [$F(2,22)=0.83, p=0.45, BF=0.24$, and, respectively, $F(1.28,14.04)=0.76$,  Huynh-Feldt Corrected degrees of freedom, $p = 0.43, BF=0.27$; Bayes factors compare the model with both main effects and an interaction term to the model with both main effects but no interaction] -  suggesting the effect of the frequency of a condition within a block is independent of the target stimuli.
+
+In Experiment 3, there was no manipulation of target (or dimension) frequency, but like in Experiment 1, error rates were higher on target-present compared to target-absent trials, $t(11)=3.71, p<0.001$; and similar to Experiment 2, there was no significant difference in error rates between color and orientation targets, $t(11)=1.51, p=0.16, BF_{10}=0.71$. 
+
+
+## Mean Reaction times (RTs)
+
+```{r meanRTs, fig.cap="Mean RTs from Experiments 1, 2, and 3 for all combinations of target condition and target frequency. Target frequency is defined relative to the target condition, as the frequency with which that target condition occurred within a given block. Of note, this means that for a given frequency, the data from the different target conditions do not necessarily come from the same block of the experiment. Error bars show the standard error of the mean.", warning=FALSE, message= FALSE, fig.width= 7, fig.asp=0.5}
+pd <- position_dodge(width = 0.05)
+ssdata %>% ggplot(aes(x = BlkFreq, color = target, shape = target, y= mmRT))+ 
+      geom_errorbar( aes(ymax=mmRT+seRT, ymin=mmRT-seRT), width=0.05, position = pd)  +
+      geom_line(position = pd) + geom_point(size = 3, position = pd) +
+      ylab("RT (s)") +  xlab('Frequencies in Blocks') + 
+      figTheme("bottom")+ coord_cartesian(ylim = c(0.42,0.63)) +
+       scale_x_continuous(breaks = c(0.25,0.5,0.75)) +
+      facet_wrap(~ exp)
+
+```
+
+Given that the error rates were low, we analyzed only RTs from trials with a correct response, though excluding outliers which were defined as trials on which the reciprocal RT was more than three standard deviations from the mean for any individual participant or the RT was shorter than 40 ms. 
+Figure \@ref(fig:meanRTs) shows the pattern of mean RTs from all three experiments. 
+In both Experiments 1 and 2, there were significant main effects of frequency on RTs [$F(2,22) = 10.25, p< 0.001, \eta^{2}_{p}=0.48$, and, respectively, $F(1.27,13.96)=29.83$, Huynh-Feldt-corrected degrees of freedom, $p < 0.01, \eta^{2}_{p}=0.73$]. 
+Post-hoc comparisons indicated that RTs were faster in high-frequency compared to low-frequency blocks, suggesting participants were adapting to the statistics of stimuli in a way that allowed a faster response to the most frequent type of trial within a given block. In particular, in Experiment 1, RTs were significantly faster in the high-frequency compared to both the low- and medium-frequency block [$t(11)=3.96, p<0.01$, and, respectively, $t(11)=3.88, p<0.01$; Bonferroni-corrected p-values], but there was no significant difference between the medium- and low-frequency blocks, $t(11)=0.086, p>0.9$. Similarly, in Experiment 2, RTs were significantly faster in the high-frequency compared to the low- and medium-frequency blocks [$t(11)=7.72, p<0.001$, and, respectively, $t(11)=3.66, p<0.01$; Bonferroni-corrected p-values], and they were also significantly faster in the medium-  compared to the low-frequency block [$t(11)=4.06, p<0.01$; Bonferroni-corrected p-value]. 
+
+In addition, in Experiment 1, RTs were faster for the target-present than for target-absent trials, $F(1,11) = 5.94, p<0.05, \eta^{2}_{p}=0.35$, consistent with the visual search literature. In contrast, there was no difference between color- and orientation-defined target trials in Experiment 2, $F(1, 11)=0.45, p=0.52, BF_{10}=0.25$.
+Interestingly, there was no interaction between target condition and frequency in either Experiment 1 or 2 [$F(2,22)=2.44, p=0.11, BF=0.38$, and, respectively, $F(2,22)=0.87, p = 0.43, BF=0.26$; Bayes factors compare the model with both main effects and an interaction term to the model with both main effects but no interaction] - suggesting that the effect of the frequency is independent of the target stimuli.  
+
+Comparing the error rates depicted in Figure  \@ref(fig:errors) and the mean RTs in Figure \@ref(fig:meanRTs), error rates tended to be lower in those frequency conditions in which RTs were faster. While this suggests that there were no speed-accuracy trade-offs, it favors the view that participants were adapting to the statistics of stimuli in a way that permitted faster and more accurate responding to the most frequent type of trial within a given block, at the cost of slower and less accurate responding on the less frequent type of trial. A possible explanation of these effects is a shift of the starting point of a drift-diffusion model towards the boundary associated with the response required on the most frequent type of trial; as will be seen below (see modeling section), the shapes of the RT distributions were consistent with this interpretation.
+
+Without the manipulation of frequency, Experiment 3 yielded a standard outcome: all three types of trials had similar mean RTs, $F(2,22) = 2.15, p = 0.14, BF_{10}=0.72$. This is different from Experiment 1, in which target-absent RTs  were significantly slower that target-present RTs. This difference likely occurred because the target dimension was kept constant within short mini-blocks in Experiment 1, but varied randomly across trials in Experiment 3, yielding a dimension switch cost and therefore slower average RTs on target-present trials (see modeling section for further confirmation of this interpretation).
+
+## Inter-trial effects
+
+As we are interested in inter-trial dynamic changes in response times, we compared trials on which the target condition was switched to trials on which it was repeated from the previous trial. Figure \@ref(fig:meanITEs) illustrates the inter-trial effects on RTs for all three experiments. Target-repeat trials were significantly faster than target-switch trial in Experiment 1 [$F(1,11)=6.13, p<0.05, \eta^{2}_{p}=0.48$], Experiment 2 [$F(1,11)=71.29, p<0.001, \eta^{2}_{p}=0.87$], and Experiment 3 [$F(1,11)=32.68,p<0.001, \eta^{2}_{p}=0.75$]. 
+This is consistent with trial-wise updating of an internal model (see the modeling section). In addition, we found the target repetition/switch effect to be larger for target-absent responses (i.e., comparing repetition of target absence to a switch from target presence to target absence) compared to target-present responses in Experiment 3 (interaction between inter-trial condition and target condition, $F(1,11)=14.80,  p<0.01, \eta^{2}_{p}=0.57$), while there was no  such a difference in Experiment 1, ($F(1,11) = 2.55, p = 0.14, BF=0.42$, Bayes factor compares the model with both main effects and an interaction term to the model with both main effects but no interaction). These findings suggest that the target repetition/switch effect is as such stable across experiments, though its magnitude may fluctuate across different conditions. The interaction between target condition and inter-trial condition found in Experiment 3, but not in Experiment 1, might be a consequence of the fact that color and orientation targets were randomly interleaved in Experiment 3 and the target-present repetitions include trials on which the target dimensions may either repeat or change - whereas the target dimension was always repeated in Experiment 1. The effects of repeating/switching the target dimension are considered further below. 
+
+```{r meanITEs, out.width='80%', fig.cap="Intertrial effects for all three experiments. Error bars show the standard error of the mean.", fig.width=7, fig.asp=0.5}
+pd <- position_dodge(width = 0.1)
+inttrial %>% group_by(exp, resp,dn) %>% 
+  summarise(mmRT = mean(mRT), n = n(), seRT = sd(mRT)/sqrt(n-1)) %>% 
+  ggplot(., aes(x = resp, y=mmRT, shape = dn, color =  dn, group=dn)) + 
+      geom_point(size = 3, position = pd)  + geom_line( position = pd) + 
+      geom_errorbar(aes(ymax=mmRT+seRT, ymin=mmRT-seRT), width=0.2,  position = pd) +
+      labs(x = "Intertrial Response", y="RT (s)", shape = 'Target', color="Target") +
+      coord_cartesian(ylim = c(0.43,0.61)) +
+      figTheme("bottom") + facet_wrap(~exp)
+```
+
+Note that in all experiments, we mapped two alternative target conditions to two fixed alternative responses. The repetition and switch effects observed above may be partly due to response repetitions and switches. To further analyze dimension repetition and switch effects when both dimensions were mapped to the same response, we extracted those target-present trials from Experiment 3 on which a target was also present on the previous trial. 
+Figure \@ref(fig:dimRepetition) depicts the mean RTs for the dimension-repeat vs. -switch trials. Mean RTs were faster when the target dimension was repeated, compared to when it was switched, $F(1,11)=25.06, p<0.001, \eta^{2}_{p}=0.70$. There were no differences between the color and orientation dimensions, $F(1,11) = 0.16, p = 0.69, BF_{10}=0.30]$, and no interaction between the type of dimension and dimension repetition, $F(1,11) = 0.04, p = 0.84, BF=0.36$. This pattern is consistent with the prediction of the dimension-weighting account [@muller_visual_1995]. 
+
+```{r dimRepetition, fig.cap="Dimension repetition/switch effect in Experiment 3. RTs were signicantly faster when the target-defining dimension was repeated. Error bars show the standard error of the mean.", fig.width=4, fig.height=3}
+
+inttrial %>% dplyr::filter(exp == 'Exp. 3' & d1 != 'Absent' & dn !='Absent') %>% # select dim repetition/switch only in Experiment 3
+  group_by(dim,dn) %>% # group by dim rep/switch
+  summarise(mmRT = mean(mRT), n = n(), seRT = sd(mRT)/sqrt(n-1)) %>% 
+  ggplot(., aes(x = dim, y=mmRT, shape = dn, color =  dn, group=dn)) + 
+      geom_point(size = 3)  + geom_line() + 
+      geom_errorbar(aes(ymax=mmRT+seRT, ymin=mmRT-seRT), width=0.2) +
+      labs(x = "Intertrial Dimension", y="RT (s)", shape = 'Target', color="Target") +
+      coord_cartesian(ylim = c(0.42,0.6)) +
+      figTheme("bottom") 
+```
+
+In addition to intter-trial effects from reptetion and switching of the target dimension, there may also be effects of repeating/switching the individual features. To address this question, we extracted those trials on which a target was present and where the same target dimension was repeated from the previous trial. Figure \@ref(fig:featureITEs) shows the mean RTs for feature switch vs. repeat trials. In Experiment 1 and Experiment 3 there was no significant effect of feature repetition/switch [Exp. 1: $F(1,11)=0.30, p=0.593, BF_{10}=0.284$, Exp. 3: $F(1,11)=3.77, p=0.078, BF_{10}=0.748$], nor was there any significant interaction with the target dimension [Exp. 1: $F(1,11)=2.122, p=0.17, BF=0.463$, Exp. 3: $F(1,11)=0.007, p=0.93, BF=0.364$]. However, in Experiment 2 RTs were significantly faster when the same feature was repeated compared to when the feature changed between trials, $F(1,11)=35.535, p<0.001, \eta^{2}_{p}=0.764$, and this effect did not interact with the dimension, $F(1,11)=1.858, p=0.2, BF=0.565$. 
+
+
+```{r featureITEs, out.width='80%', fig.cap="Intertrial effects for feature switch/repetition for all three experiments. Error bars show the standard error of the mean.", fig.width=7, fig.asp=0.5}
+
+mutate(exp_data[[1]], d1 = lag(dimension), c1=lag(color), o1=lag(orientation), inttrial_dim=if_else(d1==dimension, "Repeat", "Switch")) %>% filter(!error, !outlier, inttrial_dim=="Repeat", target=="Present") %>% mutate(inttrial_f = ifelse(dimension=="Color", ifelse(c1==color, "Repeat", "Switch"), ifelse(o1==orientation, "Repeat", "Switch"))) %>% group_by(dimension, inttrial_f, sub) %>% summarize(mRT=mean(rt)) %>% summarize(mmRT=mean(mRT), seRT=sd(mRT)/sqrt(11)) -> e1_inttrial_feature
+
+mutate(exp_data[[2]], d1 = lag(dimension), c1=lag(color), o1=lag(orientation), inttrial_dim=if_else(d1==dimension, "Repeat", "Switch")) %>% filter(!error, !outlier, inttrial_dim=="Repeat") %>% mutate(inttrial_f = ifelse(dimension=="Color", ifelse(c1==color, "Repeat", "Switch"), ifelse(o1==orientation, "Repeat", "Switch"))) %>% group_by(dimension, inttrial_f, sub) %>% summarize(mRT=mean(rt)) %>% summarize(mmRT=mean(mRT), seRT=sd(mRT)/sqrt(11)) -> e2_inttrial_feature
+
+mutate(exp_data[[3]], d1 = lag(dimension), c1=lag(color), o1=lag(orientation), inttrial_dim=if_else(d1==dimension, "Repeat", "Switch")) %>% filter(!error, !outlier, inttrial_dim=="Repeat", target=="Present") %>% mutate(inttrial_f = ifelse(dimension=="Color", ifelse(c1==color, "Repeat", "Switch"), ifelse(o1==orientation, "Repeat", "Switch"))) %>% group_by(dimension, inttrial_f, sub) %>% summarize(mRT=mean(rt)) %>% summarize(mmRT=mean(mRT), seRT=sd(mRT)/sqrt(11)) -> e3_inttrial_feature
+
+e1_inttrial_feature$exp <- 1
+e2_inttrial_feature$exp <- 2
+e3_inttrial_feature$exp <- 3
+inttrial_feature <- rbind(e1_inttrial_feature, e2_inttrial_feature, e3_inttrial_feature)
+
+pd <- position_dodge(width = 0.1)
+ggplot(inttrial_feature, aes(x=inttrial_f, y=mmRT, shape=dimension, color=dimension, group=dimension)) + geom_point(size = 3, position = pd) + 
+  geom_line(position=pd) + theme_bw() + geom_errorbar(aes(ymin=mmRT-seRT, ymax=mmRT+seRT), width=0.2,  position = pd) + 
+  labs(x = "Intertrial feature", y="RT (s)", shape = "TDD", color="TDD") + figTheme("bottom") +  coord_cartesian(ylim = c(0.43,0.54)) +   facet_wrap(~exp)
+      
+```
+
+
+In this section, we have seen that RTs were faster when target presence/absence or the target dimension was repeated. However, the origin of these inter-trial effects is unclear. The faster RTs after cross-trial repetition could reflect either more efficient stimulus processing (e.g., based on allocating more attention to a repeated stimulus dimension) or response bias (i.e., an inclination to respond based on less evidence). In the next section, we will address this issue by comparing different computational models and determining which parameters are involved in these effects. Because we found feature based inter-trial effects, in only one of the three experiments and they were smaller than inter-trial effects based on either target presence/absence or the target dimension we have chosen to not attempt to model the feature based inter-trial effects.
